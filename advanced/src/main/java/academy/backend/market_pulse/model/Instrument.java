@@ -1,5 +1,8 @@
 package academy.backend.market_pulse.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 
 /**
@@ -7,6 +10,16 @@ import lombok.Getter;
  * инструментов данные (тикер, название, валюта) и защищает их инварианты
  * прямо в конструкторе.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Stock.class, name = "STOCK"),
+        @JsonSubTypes.Type(value = Bond.class, name = "BOND"),
+        @JsonSubTypes.Type(value = Etf.class, name = "ETF"),
+})
 @Getter
 public abstract class Instrument {
 
@@ -25,6 +38,7 @@ public abstract class Instrument {
         this.currency = currency;
     }
 
+    @JsonIgnore
     public abstract String getDescription();
 
     /**

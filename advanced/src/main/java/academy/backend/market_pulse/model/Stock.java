@@ -3,6 +3,8 @@ package academy.backend.market_pulse.model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 /**
@@ -21,8 +23,9 @@ public class Stock extends Instrument implements DividendPaying {
      */
     private final BigDecimal dividendYield;
 
-    public Stock(String ticker, String name, Currency currency,
-                 String sector, BigDecimal dividendYield) {
+    @JsonCreator
+    public Stock(@JsonProperty("ticker") String ticker,@JsonProperty("name") String name,@JsonProperty("currency") Currency currency,
+                 @JsonProperty("sector") String sector,@JsonProperty("dividendYield") BigDecimal dividendYield) {
         super(ticker, name, currency);
         this.sector = sector;
         this.dividendYield = dividendYield;
