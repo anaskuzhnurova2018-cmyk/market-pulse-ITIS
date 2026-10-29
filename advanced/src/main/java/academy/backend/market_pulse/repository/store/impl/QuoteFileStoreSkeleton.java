@@ -1,17 +1,10 @@
 package academy.backend.market_pulse.repository.store.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 
 import academy.backend.market_pulse.model.Quote;
 import academy.backend.market_pulse.repository.store.QuoteFileStore;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Заготовка для самостоятельной работы (см. «Требования к файловому хранилищу.md», семинар 7) —
@@ -21,33 +14,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class QuoteFileStoreSkeleton implements QuoteFileStore {
 
-    private static final ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
     @Override
     public void save(Path path, List<Quote> quotes) {
-        try {
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent());
-            }
-            mapper.writerWithDefaultPrettyPrinter().writeValue(path.toFile(), quotes);
-        }  catch (IOException e) {
-            throw new RuntimeException("Не удалось сохранить котировки в файл: " + path,e);
-        }
+        // TODO: сохранить котировки в файл по указанному пути.
+        //  Подсказка: на каждую котировку нужно сохранить тикер, тип и валюту инструмента (чтобы
+        //  потом восстановить его через InstrumentFactories.create), а также цену и изменение за
+        //  период — этого достаточно, чтобы собрать Quote обратно.
+        throw new UnsupportedOperationException("TODO: реализовать сохранение котировок в файл");
     }
 
     @Override
     public List<Quote> load(Path path) {
-        try {
-            if (!Files.exists(path)) {
-                return List.of();
-            }
-            return mapper.readValue(
-                    path.toFile(),
-                    new TypeReference<List<Quote>>() {
-                    }
-            );
-        }  catch (IOException e) {
-            throw new RuntimeException("Не удалось прочитать котировки из файла: " + path,e);
-        }
+        // TODO: прочитать котировки из файла и восстановить при старте.
+        //  Если файла ещё нет (первый запуск) — вернуть пустой список, а не бросать исключение.
+        throw new UnsupportedOperationException("TODO: реализовать чтение котировок из файла");
     }
 }

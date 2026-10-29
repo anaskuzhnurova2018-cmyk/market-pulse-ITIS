@@ -2,8 +2,6 @@ package academy.backend.market_pulse.model;
 
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 /**
@@ -18,8 +16,7 @@ public class Quote {
     private final BigDecimal price;
     private final BigDecimal changePercent;
 
-    @JsonCreator
-    public Quote(@JsonProperty("instrument") Instrument instrument, @JsonProperty("price") BigDecimal price, @JsonProperty("changePercent") BigDecimal changePercent) {
+    public Quote(Instrument instrument, BigDecimal price, BigDecimal changePercent) {
         this.instrument = instrument;
         this.price = price;
         this.changePercent = changePercent;
